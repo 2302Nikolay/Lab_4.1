@@ -1,46 +1,42 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-class Bankomat:
-    def __init__(self, number, actual_sum, min_sum, max_sum):
+class Bancomat:
+    def __init__(self, number, maxs, mins):
+        self.banknotes = {"10": 0, "100": 0, "500": 0, "1000": 0}
         self.number = number
-        self.actual_sum = actual_sum
-        self.min_sum = min_sum
-        self.max_sum = max_sum
+        self.maxs = maxs
+        self.mins = mins
 
-    def load_money(self, banknotes):
-        for nominal, count in banknotes.items():
-            self.actual_sum += nominal * count
+    @property
+    def total_sum(self):
+        total = 0
+        for nominals, count in self.banknotes.items():
+            total += (int(nominals) * count)
+        return total
 
-    def get_money(self, summ):
-        if self.min_sum <= summ <= self.max_sum:
-            if self.actual_sum >= summ:
-                self.actual_sum -= summ
-                return "Деньги успешно сняты."
-            else:
-                return "Недостаточно средств в банкомате."
+    def LoadMoney(self, taple):
+        for nominal, count in taple.items():
+            self.banknotes[nominal] += count
+        print("Остаток в банкомате: ", self.total_sum)
+
+    def GetMoney(self, sum_tuple):
+        if self.total_sum >= self.CheckSum(sum_tuple) >= self.mins and self.CheckSum(sum_tuple) <= self.maxs:
+            for nominal, count in sum_tuple.items():
+                self.banknotes[nominal] -= count
+            print("Остаток в банкомате:", self.total_sum)
         else:
-            return "Некорректная сумма снятия."
+            print("Error!")
 
-    def toString(self):
-        nominals = [1000, 500, 100, 50, 10]
-        counts = []
-        for nominal in nominals:
-            count = self.actual_sum // nominal
-            counts.append(count)
-            self.actual_sum -= nominal * count
-        return f"В банкомате осталось:\n{counts[0]} купюр номиналом 1000\n{counts[1]} купюр номиналом 500\n{counts[2]} купюр номиналом 100\n{counts[3]} купюр номиналом 50\n{counts[4]} купюр номиналом 10"
+    def CheckSum(self, tuple):
+        total = 0
+        for nominals, count in tuple.items():
+            total += (int(nominals) * count)
+        return total
 
 
 if __name__ == "__main__":
-    bankomat = Bankomat("1234", 10000, 100, 1000)
-    print(bankomat.toString())
-
-    banknotes = {1000: 5, 500: 10, 100: 20, 10: 50}
-    bankomat.load_money(banknotes)
-    print(bankomat.toString())
-
-    summ = 500
-    message = bankomat.get_money(summ)
-    print(message)
-    print(bankomat.toString())
+    obj = Bancomat("123", 1000, 100)
+    summ = {"10": 1, "1000": 1, "500": 20}
+    obj.LoadMoney(summ)
+    print(obj.banknotes)
+    summ = {"10": 1, "1000": 0, "500": 1}
+    obj.GetMoney(summ)
+    print(obj.banknotes)
