@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 class Bancomat:
     def __init__(self, number, maxs, mins):
         self.banknotes = {"10": 0, "100": 0, "500": 0, "1000": 0}

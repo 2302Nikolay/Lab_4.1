@@ -1,44 +1,59 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-class Para:
+
+class Pair:
+    """
+    Класс, хранящий введенные коэффициенты A и B в полях first и second
+    """
+
     def __init__(self, first, second):
-        if isinstance(first, float) and isinstance(second, float):
-            self.first = first
-            self.second = second
-        else:
-            print("Ошибка! Значения полей должны быть дробными числами.")
+        """
+        Конструктор класса, принимает два параметра, валидирует их и сохраняет в поля
+        """
+        # Проверка, является ли first(A) дробным числом
+        if not isinstance(first, float):
+            raise TypeError("Значение first должно быть дробным числом")
 
-    def read(self):
-        self.first = float(input("Введите значение первого поля: "))
-        self.second = float(input("Введите значение второго поля: "))
+        # Проверка, является ли second(B) дробным числом
+        if not isinstance(second, float):
+            raise TypeError("Значение second должно быть дробным числом")
 
-    def display(self):
-        print("Значение первого поля:", self.first)
-        print("Значение второго поля:", self.second)
+        # Проверка, не равен ли second(A) нулю
+        if first == 0:
+            raise ValueError("Параметр A не должен быть равен нулю")
 
-    def root(self):
-        if self.second != 0:
-            return -self.first / self.second
-        else:
-            print("Ошибка! Коэффициент В не может быть равен нулю.")
+        # Записываем значения в поля
+        self.first = first
+        self.second = second
+
+    def SolLinEqu(self):
+        """
+        Вычисляется значение линейного уравнения, с использованием переданных в конструктор параметров
+        """
+        return (self.second * -1.0)/self.first
+
+    def Display(self):
+        """
+        Метод выводит на консоль линейное уравнение вида Ax+B с подставленными параметрами
+        """
+        print(f"(y = {self.first}x + {self.second})")
+
+    @classmethod
+    def Read(cls):
+        """
+        Статичный метод для создания экземпляра класса
+        """
+        a = float(input("Введите коэффициент A: "))
+        b = float(input("Введите коэффициент B: "))
+
+        return cls(a, b)
 
 
-def make_para(first, second):
-    return Para(first, second)
-
-
-if __name__ == "__main__":
-    para = make_para(2.5, 3.5)
-    para.display()
-
-    rootv = para.root()
-    if rootv is not None:
-        print("Корень линейного уравнения:", rootv)
-
-    para.read()
-    para.display()
-
-    rootv = para.root()
-    if rootv is not None:
-        print("Корень линейного уравнения:", rootv)
+if __name__ == '__main__':
+    # Создаем экземпляр класса
+    pair = Pair.Read()
+    # Отображаем уравнение
+    pair.Display()
+    # Выводим посчитанное результат вычисления
+    print(pair.SolLinEqu())
