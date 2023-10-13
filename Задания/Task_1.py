@@ -31,7 +31,7 @@ class Pair:
         """
         Вычисляется значение линейного уравнения, с использованием переданных в конструктор параметров
         """
-        return (self.second * -1.0)/self.first
+        return (self.second * -1.0) / self.first
 
     def Display(self):
         """
@@ -50,7 +50,7 @@ class Pair:
         return cls(a, b)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Создаем экземпляр класса
     pair = Pair.Read()
     # Отображаем уравнение

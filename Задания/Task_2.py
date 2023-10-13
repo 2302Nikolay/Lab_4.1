@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+
 class Bancomat:
     def __init__(self, number, maxs, mins):
         self.banknotes = {"10": 0, "100": 0, "500": 0, "1000": 0}
@@ -12,7 +13,7 @@ class Bancomat:
     def total_sum(self):
         total = 0
         for nominals, count in self.banknotes.items():
-            total += (int(nominals) * count)
+            total += int(nominals) * count
         return total
 
     def LoadMoney(self, taple):
@@ -21,7 +22,10 @@ class Bancomat:
         print("Остаток в банкомате: ", self.total_sum)
 
     def GetMoney(self, sum_tuple):
-        if self.total_sum >= self.CheckSum(sum_tuple) >= self.mins and self.CheckSum(sum_tuple) <= self.maxs:
+        if (
+            self.total_sum >= self.CheckSum(sum_tuple) >= self.mins
+            and self.CheckSum(sum_tuple) <= self.maxs
+        ):
             for nominal, count in sum_tuple.items():
                 self.banknotes[nominal] -= count
             print("Остаток в банкомате:", self.total_sum)
@@ -31,7 +35,7 @@ class Bancomat:
     def CheckSum(self, tuple):
         total = 0
         for nominals, count in tuple.items():
-            total += (int(nominals) * count)
+            total += int(nominals) * count
         return total
 
 
