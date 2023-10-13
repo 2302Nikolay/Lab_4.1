@@ -27,20 +27,20 @@ class Pair:
         self.first = first
         self.second = second
 
-    def SolLinEqu(self):
+    def sol_lin_equ(self):
         """
         Вычисляется значение линейного уравнения, с использованием переданных в конструктор параметров
         """
         return (self.second * -1.0) / self.first
 
-    def Display(self):
+    def display(self):
         """
         Метод выводит на консоль линейное уравнение вида Ax+B с подставленными параметрами
         """
         print(f"(y = {self.first}x + {self.second})")
 
     @classmethod
-    def Read(cls):
+    def read(cls):
         """
         Статичный метод для создания экземпляра класса
         """
@@ -52,8 +52,8 @@ class Pair:
 
 if __name__ == "__main__":
     # Создаем экземпляр класса
-    pair = Pair.Read()
+    pair = Pair.read()
     # Отображаем уравнение
-    pair.Display()
+    pair.display()
     # Выводим посчитанное результат вычисления
-    print(pair.SolLinEqu())
+    print(pair.sol_lin_equ())
